@@ -31,12 +31,16 @@ export default function Navbar() {
   };
 
   return (
+    
     <motion.nav
       className="w-full sticky top-0 z-50 bg-white/20 backdrop-blur-md"
       initial={{ opacity: 0, y: -30 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 1, type: "spring" }}
+
     >
+                <p className="text-center text-xl text-bold uppercase">site in progress</p>
+
       <Container>
         <div className="flex items-center justify-between py-4 relative">
           {/* Mobile Logo */}
