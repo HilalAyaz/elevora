@@ -4,9 +4,8 @@ interface Props {
   params: { username: string };
 }
 
-export default async function PortfolioPage(props: Props) {
-  // Await params if needed
-  const { username } = await props.params;
+export default async function PortfolioPage({ params }: Props) {
+  const { username } = params;
 
   const user = await prisma.user.findUnique({
     where: { username },

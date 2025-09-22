@@ -16,8 +16,9 @@ async function verifyJWT(token: string): Promise<JWTPayload | null> {
 
 export async function middleware(req: NextRequest) {
   const { pathname } = req.nextUrl;
+  const pathParts = pathname.split("/").filter(Boolean);
 
-  // Skip Next.js internals + API routes + favicon
+  // --- 0️⃣ Skip Next.js internals & static ---
   if (
     pathname.startsWith("/_next") ||
     pathname.startsWith("/api") ||
@@ -26,32 +27,32 @@ export async function middleware(req: NextRequest) {
     return NextResponse.next();
   }
 
-  const token = req.cookies.get("token")?.value;
-  const verifiedToken = token ? await verifyJWT(token) : null;
-
-  const pathParts = pathname.split("/").filter(Boolean);
-
   // --- 1️⃣ Public routes ---
   const publicRoutes = ["/", "/register", "/projects", "/shop"];
   if (publicRoutes.includes(pathname)) {
-    // Redirect logged-in users away from register
+    const token = req.cookies.get("token")?.value;
+    const verifiedToken = token ? await verifyJWT(token) : null;
+
+    // Logged-in users visiting /register → redirect to their dashboard
     if (verifiedToken && pathname === "/register") {
       const username = verifiedToken.username as string;
       return NextResponse.redirect(new URL(`/${username}/dashboard`, req.url));
     }
-    return NextResponse.next();
+
+    return NextResponse.next(); // 🚨 exit early, don’t process as username
   }
 
-  // --- 2️⃣ Username routes (portfolio pages) ---
-  // Only single-part paths like /hilal
+  // --- 2️⃣ Username portfolio routes ---
   if (pathParts.length === 1) {
     const username = pathParts[0];
 
-    // Skip username check if path is actually a public route (redundant)
-    if (!publicRoutes.includes(pathname)) {
+    // Reserved keywords: don't check them as usernames
+    const reserved = ["register", "projects", "shop", "dashboard", "settings"];
+    if (!reserved.includes(username)) {
       const res = await fetch(
         `${req.nextUrl.origin}/api/auth/check-user?username=${username}`
       );
+
       if (!res.ok) {
         const url = req.nextUrl.clone();
         url.pathname = "/404";
@@ -65,36 +66,36 @@ export async function middleware(req: NextRequest) {
         return NextResponse.rewrite(url);
       }
     }
+
     return NextResponse.next();
   }
 
-  // --- 3️⃣ Protected subpages: dashboard & settings ---
-  const restrictedPages = ["dashboard", "settings"];
+  // --- 3️⃣ Restricted subpages (dashboard/settings) ---
   if (pathParts.length >= 2) {
     const requestedUser = pathParts[0];
     const subpage = pathParts[1];
+    const restrictedPages = ["dashboard", "settings"];
 
     if (restrictedPages.includes(subpage)) {
-      // Not logged in → redirect to register
-      if (!verifiedToken)
+      const token = req.cookies.get("token")?.value;
+      const verifiedToken = token ? await verifyJWT(token) : null;
+
+      if (!verifiedToken) {
         return NextResponse.redirect(new URL("/register", req.url));
+      }
 
       const loggedInUser = verifiedToken.username as string;
       const role = verifiedToken.role as Role;
 
-      // Users can only access their own restricted pages
+      // Regular users can only access their own dashboard/settings
       if (role === Role.USER && requestedUser !== loggedInUser) {
         return NextResponse.redirect(
           new URL(`/${loggedInUser}/dashboard`, req.url)
         );
       }
-
-      // ADMIN / OWNER can access any restricted page
-      return NextResponse.next();
     }
   }
 
-  // --- 4️⃣ All other routes ---
   return NextResponse.next();
 }
 
