@@ -1,11 +1,15 @@
 import { prisma } from "@/lib/db";
 
-interface Props {
-  params: { username: string };
-}
+// Define the type of params as a Promise
+type Params = Promise<{ username: string }>;
 
-export default async function PortfolioPage({ params }: Props) {
-  const { username } = params;
+export default async function PortfolioPage({
+  params,
+}: {
+  params: Params;
+}) {
+  // ✅ Await the promise
+  const { username } = await params;
 
   const user = await prisma.user.findUnique({
     where: { username },
