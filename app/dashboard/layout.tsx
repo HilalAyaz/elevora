@@ -52,7 +52,9 @@ export default function OwnerLayout({ children }: OwnerLayoutProps) {
         {/* Header */}
         <header className="w-full bg-white shadow-sm p-4 flex justify-between items-center">
           <h2 className="text-xl font-semibold">Owner Dashboard</h2>
-          <div>Welcome, Owner!</div>
+          <div>
+            <LogoutButton />
+          </div>
         </header>
 
         {/* Page Content */}
