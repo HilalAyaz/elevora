@@ -47,7 +47,14 @@ export async function middleware(req: NextRequest) {
     const username = pathParts[0];
 
     // Reserved keywords: don't check them as usernames
-    const reserved = ["register", "projects", "shop", "dashboard", "settings"];
+    const reserved = [
+      "register",
+      "projects",
+      "shop",
+      "dashboard",
+      "settings",
+      "blog",
+    ];
     if (!reserved.includes(username)) {
       const res = await fetch(
         `${req.nextUrl.origin}/api/auth/check-user?username=${username}`
