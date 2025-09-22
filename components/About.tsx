@@ -8,7 +8,6 @@ export default function About() {
     <section id="about" className="py-20 bg-background">
       <Container>
         <div className="grid md:grid-cols-2 gap-12 items-center">
-          {/* Left Side - Text */}
           <motion.div
             initial={{ opacity: 0, x: -50 }}
             whileInView={{ opacity: 1, x: 0 }}
@@ -31,7 +30,6 @@ export default function About() {
             </p>
           </motion.div>
 
-          {/* Right Side - Illustration/Placeholder */}
           <motion.div
             initial={{ opacity: 0, x: 50 }}
             whileInView={{ opacity: 1, x: 0 }}

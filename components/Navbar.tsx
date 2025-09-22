@@ -31,19 +31,18 @@ export default function Navbar() {
   };
 
   return (
-    
     <motion.nav
       className="w-full sticky top-0 z-50 bg-white/20 backdrop-blur-md"
       initial={{ opacity: 0, y: -30 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 1, type: "spring" }}
-
     >
-                <p className="text-center text-xl text-bold uppercase">site in progress</p>
+      <p className="text-center text-xl text-bold uppercase">
+        site in progress
+      </p>
 
       <Container>
         <div className="flex items-center justify-between py-4 relative">
-          {/* Mobile Logo */}
           <div className="md:hidden">
             <Link
               href="/"
@@ -53,7 +52,6 @@ export default function Navbar() {
             </Link>
           </div>
 
-          {/* Mobile Hamburger */}
           <div className="md:hidden">
             <Hamburger
               toggled={mobileOpen}
@@ -63,7 +61,6 @@ export default function Navbar() {
             />
           </div>
 
-          {/* Desktop Logo */}
           <div className="hidden md:block">
             <Link
               href="/"
@@ -73,7 +70,6 @@ export default function Navbar() {
             </Link>
           </div>
 
-          {/* Desktop Links */}
           <div className="hidden md:flex absolute left-1/2 transform -translate-x-1/2 gap-6 px-6 py-2 rounded-full bg-white/50 backdrop-blur-sm transition-all duration-300">
             {navLinks.map((link) => (
               <Link
@@ -88,7 +84,6 @@ export default function Navbar() {
             ))}
           </div>
 
-          {/* Desktop Get Started */}
           <div className="hidden md:block">
             <Link href="/register">
               <Button icon={FaArrowRight} size="md">
@@ -98,7 +93,6 @@ export default function Navbar() {
           </div>
         </div>
 
-        {/* Mobile Menu with animation */}
         <AnimatePresence>
           {mobileOpen && (
             <motion.div
@@ -121,7 +115,6 @@ export default function Navbar() {
                 </Link>
               ))}
 
-              {/* Mobile Get Started Button */}
               <Button
                 icon={FaArrowRight}
                 size="md"

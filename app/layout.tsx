@@ -12,28 +12,28 @@ export const metadata: Metadata = {
     "showcase work",
   ],
   authors: [{ name: "Elevora Team" }],
-  metadataBase: new URL("http://localhost:3000"), // change to prod URL later
+  metadataBase: new URL("http://localhost:3000"), 
   alternates: {
-    canonical: "http://localhost:3000", // change to prod URL later
+    canonical: "http://localhost:3000", 
   },
   openGraph: {
     title: "Elevora",
     description: "Elevate your online presence with customizable portfolios.",
-    url: "http://localhost:3000", // change to prod URL later
+    url: "http://localhost:3000", 
     siteName: "Elevora",
     locale: "en_US",
     type: "website",
-    // images: []  <-- keep empty in dev, add real URLs in production
+    // images: []   <-- add later
   },
   twitter: {
     card: "summary_large_image",
     title: "Elevora",
     description: "Elevate your online presence with customizable portfolios.",
-    creator: "@elevora", // replace when you have a handle
+    creator: "@elevora", 
     // images: [] <-- same here, add later
   },
   robots: {
-    index: false, // ❌ prevents Google from indexing dev
+    index: false, 
     follow: true,
   },
 };

@@ -57,7 +57,6 @@ export default function WhyChosen() {
   return (
     <section className="py-24 text-foreground">
       <Container>
-        {/* Title */}
         <motion.div
           initial={{ opacity: 0, y: 30 }}
           animate={{ opacity: 1, y: 0 }}
@@ -79,14 +78,11 @@ export default function WhyChosen() {
               key={index}
               className="w-full flex justify-center px-4 sm:px-0"
             >
-              {/* Card with gradient background and shadow */}
               <div
                 className="flex flex-col md:flex-row w-full max-w-6xl h-[32rem] sm:h-[36rem] md:h-[40rem] rounded-3xl overflow-hidden relative 
                               bg-gradient-to-tr from-primary/20 to-secondary/10 shadow-2xl hover:shadow-3xl transition-shadow duration-500"
               >
-                {/* Overlay white card with backdrop blur */}
                 <div className="absolute inset-0 m-4 md:m-6 flex flex-col md:flex-row bg-primary/10 backdrop-blur-xl rounded-3xl overflow-hidden shadow-inner">
-                  {/* Image */}
                   <motion.div
                     className="relative w-full md:w-1/2 h-64 sm:h-full md:h-full "
                     initial={{ x: 100, opacity: 0 }}
@@ -103,7 +99,6 @@ export default function WhyChosen() {
                     />
                   </motion.div>
 
-                  {/* Text */}
                   <motion.div
                     className="w-full md:w-1/2 p-6 sm:p-10 flex flex-col justify-center"
                     initial={{ x: -100, opacity: 0 }}

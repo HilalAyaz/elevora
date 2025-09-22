@@ -23,13 +23,13 @@ export default function Hero() {
 
   // Smooth typing effect
   useEffect(() => {
-    const brandDelay = 1000; // wait for brand animation
+    const brandDelay = 1000; 
     let currentIndex = 0;
 
     const startTyping = () => {
       const interval = setInterval(() => {
         if (currentIndex < tagline.length) {
-          setDisplayedText(tagline.slice(0, currentIndex + 1)); // always slice safely
+          setDisplayedText(tagline.slice(0, currentIndex + 1)); 
           currentIndex++;
         } else {
           clearInterval(interval);
@@ -46,7 +46,6 @@ export default function Hero() {
   return (
     <section className="text-center py-20 overflow-hidden">
       <Container>
-        {/* Brand Name */}
         <motion.h1
   className={`${italiana.className} text-6xl md:text-7xl lg:text-8xl font-semibold text-primary tracking-widest`}
   initial={{ opacity: 0 }}
@@ -57,7 +56,6 @@ export default function Hero() {
 </motion.h1>
 
 
-        {/* Tagline */}
         <p
           className={`${islandMoments.className} text-3xl md:text-5xl lg:text-6xl text-secondary mt-2 relative inline-block`}
         >
@@ -164,7 +162,6 @@ export default function Hero() {
             </p>
           </div>
 
-          {/* Button Right */}
           <div className="flex-1 flex justify-start md:justify-end">
             <Button
               icon={FaArrowRight}

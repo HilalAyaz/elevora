@@ -69,7 +69,6 @@ export default function Pricing() {
   return (
     <section id="pricing" className="py-24 bg-background text-foreground">
       <Container>
-        {/* Heading */}
         <motion.div
           initial={{ opacity: 0, y: 50 }}
           animate={{ opacity: 1, y: 0 }}
@@ -87,7 +86,6 @@ export default function Pricing() {
           </p>
         </motion.div>
 
-        {/* Plans */}
         <div className="grid md:grid-cols-3 gap-8">
           {pricingPlans.map((plan, idx) => (
             <motion.div
@@ -97,20 +95,17 @@ export default function Pricing() {
               transition={{ duration: 0.5, delay: idx * 0.2 }}
               className={`relative flex flex-col rounded-3xl p-8 border ${plan.bg} ${plan.textColor} ${plan.border} ${plan.glow}`}
             >
-              {/* Badge */}
               {plan.badge && (
                 <div className="absolute -top-4 left-1/2 -translate-x-1/2 bg-yellow-400 text-black px-3 py-1 rounded-full text-xs font-semibold">
                   {plan.badge}
                 </div>
               )}
 
-              {/* Title + Price */}
               <div className="mb-6 text-center">
                 <h3 className="text-2xl font-semibold mb-2">{plan.title}</h3>
                 <p className="text-4xl font-bold">{plan.price}</p>
               </div>
 
-              {/* Features */}
               <ul className="space-y-3 flex-1">
                 {plan.features.map((feature, i) => (
                   <li key={i} className="flex items-start gap-3">
@@ -120,7 +115,6 @@ export default function Pricing() {
                 ))}
               </ul>
 
-              {/* Button */}
               <Button
                 variant={plan.title === "Pro" || plan.title === "Ultra" ? "secondary" : "primary"}
                 className="mt-6 w-full"

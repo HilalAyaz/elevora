@@ -53,11 +53,9 @@ export default function FAQ() {
   return (
     <Container>
       <section className="relative py-20 text-foreground rounded-3xl overflow-hidden">
-        {/* Background with your theme colors */}
         <div className="absolute inset-0 bg-gradient-to-br from-primary/30 via-secondary/40 to-primary/20 -z-10"></div>
         <div className="absolute inset-0 bg-[radial-gradient(circle_at_top_left,_rgba(255,255,255,0.08),transparent_70%)] -z-10"></div>
 
-        {/* Heading */}
         <div className="max-w-3xl mx-auto text-center mb-12">
           <h2 className="text-4xl font-extrabold text-primary">
             Frequently Asked Questions
@@ -67,7 +65,6 @@ export default function FAQ() {
           </p>
         </div>
 
-        {/* FAQ Cards */}
         <div className="max-w-3xl mx-auto" ref={faqRef}>
           {faqs.map((faq, index) => (
             <div

@@ -19,7 +19,6 @@ export default function Footer() {
 
   return (
     <footer className="bg-background text-foreground">
-      {/* Top Links - inside container */}
       <Container>
            <motion.div className="flex flex-col items-start">
     <motion.h1
@@ -41,7 +40,6 @@ export default function Footer() {
     />
   </motion.div>
         <div className="grid grid-cols-2 gap-8 py-6 lg:py-8 md:grid-cols-4">
-          {/* Company */}
           <div>
          
             <h2 className="mb-6 text-sm font-semibold text-primary uppercase">
@@ -58,7 +56,6 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Help Center */}
           <div>
             <h2 className="mb-6 text-sm font-semibold text-primary uppercase">
               Help Center
@@ -74,7 +71,6 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Legal */}
           <div>
             <h2 className="mb-6 text-sm font-semibold text-primary uppercase">
               Legal
@@ -90,7 +86,6 @@ export default function Footer() {
             </ul>
           </div>
 
-          {/* Download */}
           <div>
             <h2 className="mb-6 text-sm font-semibold text-primary uppercase">
               Download
@@ -108,11 +103,9 @@ export default function Footer() {
         </div>
       </Container>
 
-      {/* Bottom Bar - full width background, content in container */}
       <div className="bg-primary/10 dark:bg-primary/20 py-6">
   <Container>
     <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-4">
-      {/* Desktop Left: Rights Reserved */}
       <span className="text-sm text-foreground/70 text-center md:text-left order-3 md:order-1">
         © 2025{" "}
         <Link href="#" className="text-primary hover:text-secondary transition-colors">
@@ -121,14 +114,12 @@ export default function Footer() {
         . All Rights Reserved.
       </span>
 
-      {/* Center: ELEVORA */}
       <motion.h1
         className={`${italiana.className} text-2xl md:text-3xl lg:text-4xl font-semibold text-primary tracking-widest order-1 md:order-2 text-center`}
       >
         ELEVORA
       </motion.h1>
 
-      {/* Right: Social Links */}
       <div className="flex space-x-5 rtl:space-x-reverse justify-center md:justify-end order-2 md:order-3">
         <Link href="#" className="text-foreground/50 hover:text-primary transition-colors">
           <FaFacebookF className="w-6 h-6" />

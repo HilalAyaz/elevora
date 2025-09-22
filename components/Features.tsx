@@ -79,7 +79,6 @@ export default function Features() {
                   className="object-cover rounded-xl opacity-0 group-hover:opacity-100 transition-opacity duration-700"
                 />
 
-                {/* Content on top */}
                 <div className="relative z-10 group-hover:opacity-50 transition smooth">
                   <h4 className={`${lexendGiga.className} text-lg font-semibold text-primary mb-2`}>
                     {f.title}
@@ -89,7 +88,6 @@ export default function Features() {
                   </p>
                 </div>
 
-                {/* Overlay gradient for readability */}
                 <div className="absolute inset-0 bg-background/60 opacity-0 group-hover:opacity-80 transition-opacity duration-500 z-0" />
               </motion.div>
             ))}

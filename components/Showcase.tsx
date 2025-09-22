@@ -59,7 +59,6 @@ export default function Showcase() {
             (intervalRef.current = setInterval(() => next(), duration))
           }
         >
-          {/* Left Arrow */}
           <div className="absolute left-4 top-1/2 -translate-y-1/2 z-30">
             <Button
               onClick={prev}
@@ -71,7 +70,6 @@ export default function Showcase() {
             </Button>
           </div>
 
-          {/* Right Arrow */}
           <div className="absolute right-4 top-1/2 -translate-y-1/2 z-30">
             <Button
               onClick={next}
@@ -83,7 +81,6 @@ export default function Showcase() {
             </Button>
           </div>
 
-          {/* Carousel */}
           <div className="overflow-hidden relative rounded-2xl shadow-xl h-64 sm:h-80 lg:h-[500px]">
             <AnimatePresence mode="wait">
               <motion.div
@@ -107,7 +104,6 @@ export default function Showcase() {
               </motion.div>
             </AnimatePresence>
 
-            {/* Progress bar */}
             <div className="absolute bottom-0 left-0 w-full h-1 bg-white/20 rounded-full">
               <motion.div
                 className="h-1 bg-secondary rounded-full"

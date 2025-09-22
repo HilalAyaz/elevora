@@ -2,13 +2,12 @@
 
 import React from "react";
 import Container from "@/components/Container";
-import Authpage from './components/Authpage'
+import Authpage from './components/AuthPage'
 
 export default function RegisterPage() {
   return (
     <Container>
       <Authpage/>
-      {/* Add your registration form here */}
     </Container>
   );
 }

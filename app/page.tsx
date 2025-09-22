@@ -1,3 +1,4 @@
+'use client';
 import Navbar from "@/components/Navbar";
 import Hero from "@/components/Hero";
 import CTA from "@/components/CTA";
@@ -10,11 +11,22 @@ import Pricing from "@/components/Pricing";
 import Testimonials from "@/components/Testimonials";
 import FAQ from "@/components/FAQ";
 import Footer from "@/components/Footer";
+import LogoutButton from "@/components/ui/LogoutButton";
+import { useEffect, useState } from "react";
 
 export default function Home() {
+  const [hasToken, setHasToken] = useState(false);
+
+  useEffect(() => {
+    const token = localStorage.getItem("token");
+    setHasToken(!!token);
+  }, []);
+
   return (
     <>
       <Navbar />
+            {hasToken && <LogoutButton />}
+
       <Hero />
       <Trustedby />
       <About />
