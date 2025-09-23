@@ -28,7 +28,7 @@ export async function middleware(req: NextRequest) {
   }
 
   // --- 1️⃣ Public routes ---
-  const publicRoutes = ["/", "/register", "/projects", "/shop"];
+  const publicRoutes = ["/", "/register", "/projects", "/shop", "/onboarding"];
   if (publicRoutes.includes(pathname)) {
     const token = req.cookies.get("token")?.value;
     const verifiedToken = token ? await verifyJWT(token) : null;

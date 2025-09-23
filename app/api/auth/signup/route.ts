@@ -1,4 +1,4 @@
-import { NextRequest, NextResponse } from "next/server"; 
+import { NextRequest, NextResponse } from "next/server";
 import { prisma } from "@/lib/db";
 import bcrypt from "bcryptjs";
 import { signToken, Role } from "@/lib/jwt";
@@ -13,7 +13,7 @@ export async function POST(req: NextRequest) {
   try {
     const { username, email, password }: UserBody = await req.json();
 
-    // Validate fields
+    // --- Validation ---
     if (!username || !email || !password) {
       return NextResponse.json(
         { error: "All fields are required." },
@@ -23,13 +23,19 @@ export async function POST(req: NextRequest) {
 
     if (!/^[\w.@+-]{3,20}$/.test(username)) {
       return NextResponse.json(
-        { error: "Username must be 3-20 characters (letters, numbers, _ . @ + -)." },
+        {
+          error:
+            "Username must be 3-20 characters (letters, numbers, _ . @ + -).",
+        },
         { status: 400 }
       );
     }
 
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) {
-      return NextResponse.json({ error: "Invalid email format." }, { status: 400 });
+      return NextResponse.json(
+        { error: "Invalid email format." },
+        { status: 400 }
+      );
     }
 
     if (password.length < 6) {
@@ -39,21 +45,21 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // Check duplicates
+    // --- Duplicate check ---
     const existing = await prisma.user.findFirst({
       where: { OR: [{ email }, { username }] },
     });
     if (existing) {
       return NextResponse.json(
         { error: "Email or username already exists." },
-        { status: 409 } // conflict
+        { status: 409 }
       );
     }
 
-    // Hash password
+    // --- Hash password ---
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // Create user
+    // --- Create user ---
     const user = await prisma.user.create({
       data: {
         username,
@@ -61,10 +67,11 @@ export async function POST(req: NextRequest) {
         email,
         password: hashedPassword,
         role: "USER" as Role,
+        hasPortfolio: false, // 👈 ensure default for new users
       },
     });
 
-    // Sign JWT with expiration
+    // --- Sign JWT ---
     const token = signToken(
       {
         id: user.id,
@@ -75,10 +82,16 @@ export async function POST(req: NextRequest) {
       "1d"
     );
 
-    // Response (no token in body)
+    // --- Decide redirect ---
+    const redirectTo = user.hasPortfolio
+      ? `/${user.username}/dashboard`
+      : "/onboarding";
+
+    // --- Response ---
     const res = NextResponse.json({
       message: "Account created successfully!",
       user: { id: user.id, username: user.username, role: user.role },
+      redirectTo,
     });
 
     res.cookies.set("token", token, {
@@ -86,14 +99,17 @@ export async function POST(req: NextRequest) {
       secure: process.env.NODE_ENV === "production",
       sameSite: "lax",
       path: "/",
-      maxAge: 60 * 60 * 24, 
+      maxAge: 60 * 60 * 24,
     });
 
     return res;
   } catch (err: unknown) {
     console.error("Signup error:", err);
     return NextResponse.json(
-      { error: "Something went wrong while creating your account. Please try again later." },
+      {
+        error:
+          "Something went wrong while creating your account. Please try again later.",
+      },
       { status: 500 }
     );
   }

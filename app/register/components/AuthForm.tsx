@@ -62,12 +62,17 @@ export default function AuthForm({ isLogin }: AuthFormProps) {
 
       const user: UserResponse = data.user;
 
-      // Role-based redirect (middleware reads the HTTP-only cookie)
-      if (user.role === Role.OWNER) router.push("/dashboard/owner");
-      else if (user.role === Role.ADMIN) router.push("/dashboard/admin");
-      else if (user.role === Role.USER && user.username)
-        router.push(`/${user.username}/dashboard`);
-      else router.push("/");
+      // 🔑 Use redirect from API response (signup) or fallback for login
+      if (data.redirectTo) {
+        router.push(data.redirectTo);
+      } else {
+        // fallback for login
+        if (user.role === Role.OWNER) router.push("/dashboard/owner");
+        else if (user.role === Role.ADMIN) router.push("/dashboard/admin");
+        else if (user.role === Role.USER && user.username)
+          router.push(`/${user.username}/dashboard`);
+        else router.push("/");
+      }
 
       // Clear form
       setUsername("");
