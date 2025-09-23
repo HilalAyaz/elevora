@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
-import { prisma } from "@/lib/db";
+import { prisma, Role } from "@/lib/db";
 import bcrypt from "bcryptjs";
-import { signToken, Role } from "@/lib/jwt";
+import { signToken } from "@/lib/jwt";
 
 interface UserBody {
   username: string;
@@ -13,7 +13,7 @@ export async function POST(req: NextRequest) {
   try {
     const { username, email, password }: UserBody = await req.json();
 
-    // --- Validation ---
+    // Validate fields
     if (!username || !email || !password) {
       return NextResponse.json(
         { error: "All fields are required." },
@@ -45,21 +45,21 @@ export async function POST(req: NextRequest) {
       );
     }
 
-    // --- Duplicate check ---
+    // Check duplicates
     const existing = await prisma.user.findFirst({
       where: { OR: [{ email }, { username }] },
     });
     if (existing) {
       return NextResponse.json(
         { error: "Email or username already exists." },
-        { status: 409 }
+        { status: 409 } // conflict
       );
     }
 
-    // --- Hash password ---
+    // Hash password
     const hashedPassword = await bcrypt.hash(password, 10);
 
-    // --- Create user ---
+    // Create user
     const user = await prisma.user.create({
       data: {
         username,
@@ -67,11 +67,10 @@ export async function POST(req: NextRequest) {
         email,
         password: hashedPassword,
         role: "USER" as Role,
-        hasPortfolio: false, // 👈 ensure default for new users
       },
     });
 
-    // --- Sign JWT ---
+    // Sign JWT with expiration
     const token = signToken(
       {
         id: user.id,
@@ -82,16 +81,10 @@ export async function POST(req: NextRequest) {
       "1d"
     );
 
-    // --- Decide redirect ---
-    const redirectTo = user.hasPortfolio
-      ? `/${user.username}/dashboard`
-      : "/onboarding";
-
-    // --- Response ---
+    // Response (no token in body)
     const res = NextResponse.json({
       message: "Account created successfully!",
       user: { id: user.id, username: user.username, role: user.role },
-      redirectTo,
     });
 
     res.cookies.set("token", token, {

@@ -1,7 +1,7 @@
 import { NextRequest, NextResponse } from "next/server";
-import { prisma } from "@/lib/db";
+import { prisma, Role } from "@/lib/db";
 import bcrypt from "bcryptjs";
-import { signToken, Role } from "@/lib/jwt";
+import { signToken } from "@/lib/jwt";
 
 interface LoginBody {
   email: string;

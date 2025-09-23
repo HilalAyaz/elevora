@@ -1,8 +1,8 @@
 import jwt, { SignOptions, Secret } from "jsonwebtoken";
+import { Role } from "./generated/prisma";
 
 const JWT_SECRET: Secret = process.env.JWT_SECRET || "supersecretkey123";
 
-export type Role = "OWNER" | "ADMIN" | "USER";
 
 export interface JwtPayload {
   id: string;

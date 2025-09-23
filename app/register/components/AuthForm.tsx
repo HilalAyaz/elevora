@@ -2,7 +2,7 @@
 
 import React, { useState } from "react";
 import { useRouter } from "next/navigation";
-import { Role } from "@/lib/generated/prisma";
+import { Role } from "@/lib/db";
 
 interface AuthFormProps {
   isLogin: boolean;
